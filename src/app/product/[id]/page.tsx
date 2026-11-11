@@ -41,7 +41,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
       </Link>
 
       <div className="mt-4 grid gap-8 md:grid-cols-2 md:gap-12">
-        <ProductArt product={product} size="lg" className="aspect-square rounded-[2rem]" />
+        <ProductArt product={product} size="lg" priority className="aspect-square rounded-[2rem]" />
 
         <div className="flex flex-col">
           {product.badge && (

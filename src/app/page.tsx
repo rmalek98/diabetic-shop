@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { PiArrowRightBold, PiTruckBold, PiLeafBold, PiArrowsClockwiseBold } from "react-icons/pi";
-import { CATEGORIES, PRODUCTS, FREE_SHIPPING_MIN } from "@/data/catalog";
+import { CATEGORIES, PRODUCTS, FREE_SHIPPING_MIN, productById } from "@/data/catalog";
+import ProductArt from "@/components/products/ProductArt";
 import ProductCard from "@/components/products/ProductCard";
 
-const HERO_FOODS = ["🍞", "🍫", "🍦", "🥤", "🍿", "🍝"];
+const HERO_FOODS = ["seeded-keto-loaf", "dark-chocolate-stevia", "vanilla-keto-ice-cream", "lemon-sparkling-water", "lightly-salted-popcorn", "shirataki-fettuccine"];
 
 const PERKS = [
   { Icon: PiTruckBold, text: `Free shipping over $${FREE_SHIPPING_MIN}` },
@@ -45,13 +46,13 @@ export default function HomePage() {
             </div>
 
             <div aria-hidden className="mx-auto hidden w-full max-w-sm grid-cols-3 gap-3 sm:gap-4 md:grid">
-              {HERO_FOODS.map((emoji, i) => (
-                <div
-                  key={emoji}
-                  className={`grid aspect-square place-items-center rounded-3xl bg-card text-4xl shadow-[0_10px_24px_-14px_rgba(46,34,25,0.4)] sm:text-5xl ${i % 2 ? "translate-y-4" : ""} ${i % 3 === 1 ? "rotate-3" : "-rotate-2"}`}
-                >
-                  {emoji}
-                </div>
+              {HERO_FOODS.map((id, i) => (
+                <ProductArt
+                  key={id}
+                  product={productById(id)!}
+                  priority
+                  className={`aspect-square rounded-3xl ring-4 ring-card shadow-[0_10px_24px_-14px_rgba(46,34,25,0.5)] ${i % 2 ? "translate-y-4" : ""} ${i % 3 === 1 ? "rotate-3" : "-rotate-2"}`}
+                />
               ))}
             </div>
           </div>

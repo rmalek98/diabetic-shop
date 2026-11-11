@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { PiShoppingBagOpenBold } from "react-icons/pi";
 import { useCart } from "@/lib/cart";
+import { assetPath } from "@/data/catalog";
 import SearchBox from "./SearchBox";
 
 export default function Navbar() {
@@ -12,7 +13,8 @@ export default function Navbar() {
     <header className="sticky top-0 z-40 border-b border-border/70 bg-background/90 backdrop-blur-md">
       <div className="mx-auto flex h-[4.25rem] max-w-6xl items-center gap-3 px-4 sm:gap-5 sm:px-6">
         <Link href="/" className="flex shrink-0 items-center gap-2" aria-label="DiabeticShop home">
-          <span className="grid h-9 w-9 place-items-center rounded-2xl bg-primary text-lg shadow-sm" aria-hidden>🥕</span>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={assetPath("/brand/logo-a.webp")} alt="" width={40} height={40} className="h-10 w-10 rounded-2xl ring-1 ring-border" />
           <span className="hidden font-[family-name:var(--font-display)] text-xl font-bold tracking-tight sm:block">
             Diabetic<span className="text-primary">Shop</span>
           </span>

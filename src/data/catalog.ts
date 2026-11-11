@@ -140,9 +140,15 @@ const ROWS: Row[] = [
     "1 serving", [420, 38, 12, 5, 18], ["vegan", "kosher", "halal"], "meal kit lunch lentil bowl mediterranean"],
 ];
 
+// Products without a photo yet fall back to their illustrated emoji tile.
+const NO_PHOTO = new Set(["vanilla-nutrition-shake"]);
+
+export const assetPath = (path: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${path}`;
+
 export const PRODUCTS: Product[] = ROWS.map(
   ([id, name, category, price, size, emoji, description, serving, [calories, carbs, fiber, sugar, protein], diet, keywords, badge]) => ({
     id, name, category, price, size, emoji, description, serving,
+    image: NO_PHOTO.has(id) ? undefined : assetPath(`/products/${id}.webp`),
     nutrition: { calories, carbs, fiber, sugar, protein },
     diet,
     keywords: keywords.split(" "),

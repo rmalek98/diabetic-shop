@@ -24,6 +24,7 @@ export interface Product {
   price: number;
   size: string;
   emoji: string;
+  image?: string;
   description: string;
   serving: string;
   nutrition: Nutrition;

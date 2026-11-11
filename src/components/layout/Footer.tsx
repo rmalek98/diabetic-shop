@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { CATEGORIES } from "@/data/catalog";
+import { CATEGORIES, assetPath } from "@/data/catalog";
 
 export default function Footer() {
   return (
@@ -8,7 +8,8 @@ export default function Footer() {
         <div className="grid gap-8 sm:grid-cols-[1.4fr_1fr_1fr]">
           <div>
             <Link href="/" className="flex items-center gap-2">
-              <span aria-hidden className="grid h-8 w-8 place-items-center rounded-xl bg-primary">🥕</span>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={assetPath("/brand/logo-a.webp")} alt="" width={36} height={36} className="h-9 w-9 rounded-xl ring-1 ring-border" />
               <span className="font-[family-name:var(--font-display)] text-lg font-bold">
                 Diabetic<span className="text-primary">Shop</span>
               </span>
