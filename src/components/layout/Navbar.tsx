@@ -1,112 +1,42 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { ThemeToggle } from "@/components/layout/ThemeToggle";
-import { useWishlist } from "@/lib/wishlist";
-import {
-  PiHeartBold,
-  PiMagnifyingGlassBold,
-  PiListBold,
-  PiXBold,
-} from "react-icons/pi";
+import { PiShoppingBagOpenBold } from "react-icons/pi";
+import { useCart } from "@/lib/cart";
+import SearchBox from "./SearchBox";
 
 export default function Navbar() {
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [query, setQuery] = useState("");
-  const router = useRouter();
-  const { count: wishlistCount } = useWishlist();
+  const { count, setOpen } = useCart();
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6">
-        <div className="flex h-16 items-center gap-4">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 shrink-0">
-            <div className="w-8 h-8 rounded-lg bg-teal-500 flex items-center justify-center text-white font-bold text-sm">
-              D+
-            </div>
-            <span className="font-bold text-base tracking-tight hidden sm:block">
-              Diabetic<span className="text-teal-500">Shop</span>
+    <header className="sticky top-0 z-40 border-b border-border/70 bg-background/90 backdrop-blur-md">
+      <div className="mx-auto flex h-[4.25rem] max-w-6xl items-center gap-3 px-4 sm:gap-5 sm:px-6">
+        <Link href="/" className="flex shrink-0 items-center gap-2" aria-label="DiabeticShop home">
+          <span className="grid h-9 w-9 place-items-center rounded-2xl bg-primary text-lg shadow-sm" aria-hidden>🥕</span>
+          <span className="hidden font-[family-name:var(--font-display)] text-xl font-bold tracking-tight sm:block">
+            Diabetic<span className="text-primary">Shop</span>
+          </span>
+        </Link>
+
+        <SearchBox />
+
+        <Link href="/shop" className="hidden shrink-0 rounded-full px-3 py-2 text-sm font-bold hover:bg-muted transition md:block">
+          Shop all
+        </Link>
+
+        <button
+          type="button"
+          onClick={() => setOpen(true)}
+          aria-label={`Open cart, ${count} items`}
+          className="relative grid h-11 w-11 shrink-0 place-items-center rounded-full bg-card ring-1 ring-border hover:bg-muted transition"
+        >
+          <PiShoppingBagOpenBold className="h-5 w-5" />
+          {count > 0 && (
+            <span className="absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-primary px-1 text-[11px] font-extrabold text-primary-foreground">
+              {count}
             </span>
-          </Link>
-
-          {/* Search */}
-          <form
-            className="flex-1"
-            role="search"
-            onSubmit={(e) => {
-              e.preventDefault();
-              const q = query.trim();
-              router.push(q ? `/shop?q=${encodeURIComponent(q)}` : "/shop");
-              setMobileOpen(false);
-            }}
-          >
-            <div className="relative">
-              <PiMagnifyingGlassBold className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
-                type="search"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search products..."
-                aria-label="Search products"
-                className="pl-9 bg-muted/50 border-0 focus-visible:ring-1 h-9"
-              />
-            </div>
-          </form>
-
-          {/* Actions */}
-          <div className="flex items-center gap-1">
-            <ThemeToggle />
-            <Link href="/wishlist">
-              <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground relative">
-                <PiHeartBold className="h-5 w-5" />
-                {wishlistCount > 0 && (
-                  <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-red-500 text-white text-[10px] flex items-center justify-center font-bold">
-                    {wishlistCount}
-                  </span>
-                )}
-              </Button>
-            </Link>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="sm:hidden"
-              onClick={() => setMobileOpen(!mobileOpen)}
-            >
-              {mobileOpen ? <PiXBold className="h-5 w-5" /> : <PiListBold className="h-5 w-5" />}
-            </Button>
-          </div>
-        </div>
-
-        {mobileOpen && (
-          <div className="pb-3 sm:hidden">
-            <div className="flex flex-col gap-1 text-sm">
-              {[
-                ["All Products", "/shop"],
-                ["Bread & Bakery", "/shop?cat=bread-bakery"],
-                ["Sweets", "/shop?cat=sweets-desserts"],
-                ["Ice Cream", "/shop?cat=ice-cream"],
-                ["Drinks", "/shop?cat=drinks-beverages"],
-                ["Snacks", "/shop?cat=snacks"],
-                ["Meal Kits", "/shop?cat=meals-kits"],
-                ["Nutrition Shakes", "/shop?cat=medications"],
-              ].map(([label, href]) => (
-                <Link
-                  key={href}
-                  href={href}
-                  onClick={() => setMobileOpen(false)}
-                  className="px-2 py-2 rounded-md hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  {label}
-                </Link>
-              ))}
-            </div>
-          </div>
-        )}
+          )}
+        </button>
       </div>
     </header>
   );
